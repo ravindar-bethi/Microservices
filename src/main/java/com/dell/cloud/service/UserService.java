@@ -12,35 +12,36 @@ import com.dell.cloud.dto.UserDTO;
 import com.dell.cloud.entity.User;
 import com.dell.cloud.respository.UserRepository;
 
-
 @Service
 public class UserService {
-	
+
 	@Value("${jwt.secret}")
 	private String jwtSecret;
-	
+
 	@Value("${server.port}")
 	private String serverPort;
-	
-	/*@Autowired
-	private OrderServiceConfig orderServiceConfig;*/
-	
+
+	/*
+	 * @Autowired private OrderServiceConfig orderServiceConfig;
+	 */
+
 	@Value("${order.service.url}")
 	private String orderServiceUrl;
-	
-	
-	
-	
+
+	@Value("${spring.datasource.url}")
+	private String databaseUrl;
+
 	private final UserRepository userRepository;
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
-	
-	
-	public void printConfiguration(){
-		System.out.println("Jwt secret:"+jwtSecret);
-		System.out.println("server port number:"+serverPort);
-		System.out.println("Order-service-URL:"+orderServiceUrl);
-		//System.out.println("Order Service Url:"+orderServiceConfig.getUrl());
+
+	public void printConfiguration() {
+		System.out.println("Jwt secret:" + jwtSecret);
+		System.out.println("User service-server port number:" + serverPort);
+		System.out.println("Order-service-URL:" + orderServiceUrl);
+		System.out.println("Database url:" + databaseUrl);
+		// System.out.println("Order Service Url:"+orderServiceConfig.getUrl());
 	}
+
 	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
