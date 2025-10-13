@@ -22,8 +22,11 @@ public class UserService {
 	@Value("${server.port}")
 	private String serverPort;
 	
-	@Autowired
-	private OrderServiceConfig orderServiceConfig;
+	/*@Autowired
+	private OrderServiceConfig orderServiceConfig;*/
+	
+	@Value("${order.service.url}")
+	private String orderServiceUrl;
 	
 	
 	
@@ -35,23 +38,24 @@ public class UserService {
 	public void printConfiguration(){
 		System.out.println("Jwt secret:"+jwtSecret);
 		System.out.println("server port number:"+serverPort);
-		System.out.println("Order Service Url:"+orderServiceConfig.getUrl());
+		System.out.println("Order-service-URL:"+orderServiceUrl);
+		//System.out.println("Order Service Url:"+orderServiceConfig.getUrl());
 	}
-
+	@Autowired
 	public UserService(UserRepository userRepository) {
 		this.userRepository = userRepository;
 		bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	}
 
 	public User registerUser(UserDTO userDTO) {
-		User user = User.builder().userName(userDTO.getUsername()).email(userDTO.getEmail())
+		User user = User.builder().username(userDTO.getUsername()).email(userDTO.getEmail())
 				.password(bCryptPasswordEncoder.encode(userDTO.getPassword())).build();
 		return userRepository.save(user);
 
 	}
 
 	public Optional<User> findByUserName(String username) {
-		return userRepository.findByUserName(username);
+		return userRepository.findByUsername(username);
 	}
 
 	public Optional<User> findById(Long id) {
