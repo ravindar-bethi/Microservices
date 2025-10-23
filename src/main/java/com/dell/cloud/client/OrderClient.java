@@ -6,8 +6,11 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-/*@FeignClient(name="order-service", url="${order.service.url}")
+import com.dell.cloud.entity.Order;
+
+//@FeignClient(name="orderservice", url="${order.service.url}")
+@FeignClient(name="orderservice")
 public interface OrderClient{
-	@GetMapping("/user/{userId}")
-	List<String> getOrdersByUserId(@PathVariable Long userId);
-}*/
+	@GetMapping("/orders/user/{userId}")
+	List<Order> getOrdersByUserId(@PathVariable("userId") Long userId);
+}

@@ -5,29 +5,34 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import com.dell.cloud.client.OrderClient;
 import com.dell.cloud.dto.UserDTO;
+import com.dell.cloud.entity.Order;
 import com.dell.cloud.entity.User;
 import com.dell.cloud.service.UserService;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
-	
+
 	private final UserService userService;
-	
+
+	// private final OrderServiceClient orderServiceClient;
+
+	private final OrderClient orderClient;
+
 	@Autowired
-	public UserController(UserService userService) {
-		this.userService=userService;
+	public UserController(UserService userService, OrderClient orderClient) {
+		this.userService = userService;
+		this.orderClient = orderClient;
 	}
-    
-	//private OrderClient orderClient;
 
 	// Register new user
 	@PostMapping("/register")
@@ -46,16 +51,21 @@ public class UserController {
 		return ResponseEntity.status(401).body("Invalid Credentials");
 	}
 
-	
-	 /*public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) { 
-		 orderClient.getOrdersByUserId(id);
-	  return ResponseEntity.ok(userService.findById(id)); 
-	  }*/
-	 
+	/*
+	 * public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
+	 * orderClient.getOrdersByUserId(id); return
+	 * ResponseEntity.ok(userService.findById(id)); }
+	 */
 
-	public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {		
+	@GetMapping("/{id}")
+	public ResponseEntity<Optional<User>> getUserById(@PathVariable Long id) {
 		return ResponseEntity.ok(userService.findById(id));
+	}
 
+	@GetMapping("/{userId}/order")
+	public List<Order> getUserOrder(@PathVariable Long userId) {
+		System.out.println("User Controller Received:"+userId);
+		return orderClient.getOrdersByUserId(userId);
 	}
 
 }

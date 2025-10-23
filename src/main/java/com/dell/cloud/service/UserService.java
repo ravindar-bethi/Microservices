@@ -1,5 +1,6 @@
 package com.dell.cloud.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.dell.cloud.config.OrderServiceConfig;
+import com.dell.cloud.client.OrderClient;
 import com.dell.cloud.dto.UserDTO;
+import com.dell.cloud.entity.Order;
 import com.dell.cloud.entity.User;
 import com.dell.cloud.respository.UserRepository;
 
@@ -20,6 +22,8 @@ public class UserService {
 
 	@Value("${server.port}")
 	private String serverPort;
+
+	private final OrderClient orderClient;
 
 	/*
 	 * @Autowired private OrderServiceConfig orderServiceConfig;
@@ -43,8 +47,9 @@ public class UserService {
 	}
 
 	@Autowired
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, OrderClient orderClient) {
 		this.userRepository = userRepository;
+		this.orderClient = orderClient;
 		bCryptPasswordEncoder = new BCryptPasswordEncoder();
 	}
 
@@ -52,7 +57,6 @@ public class UserService {
 		User user = User.builder().username(userDTO.getUsername()).email(userDTO.getEmail())
 				.password(bCryptPasswordEncoder.encode(userDTO.getPassword())).build();
 		return userRepository.save(user);
-
 	}
 
 	public Optional<User> findByUserName(String username) {
@@ -61,5 +65,9 @@ public class UserService {
 
 	public Optional<User> findById(Long id) {
 		return userRepository.findById(id);
+	}
+
+	public List<Order> getUserOrders(Long userId) {
+		return orderClient.getOrdersByUserId(userId);
 	}
 }
