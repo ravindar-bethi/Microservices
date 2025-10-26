@@ -23,10 +23,18 @@ public class Order {
 	@Column(name="quantity")
 	private int quantity;
 	@Column(name="status")
-	private String status;// "PLACED", "CANCELLEd"
+	private String status;// "PLACED", "CANCELLEd"	
+
+	public Order(Long orderId, Long userId, String productId, int quantity, String status) {
+		super();
+		this.orderId = orderId;
+		this.userId = userId;
+		this.productId = productId;
+		this.quantity = quantity;
+		this.status = status;
+	}
 
 	
-
 	public Long getOrderId() {
 		return orderId;
 	}

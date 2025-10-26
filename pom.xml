@@ -40,8 +40,18 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>2023.0.1</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>-->
+
 		</dependencies>
 	</dependencyManagement>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -56,10 +66,10 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>-->
-		<dependency>
+		<!--<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
+		</dependency>-->
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -72,11 +82,17 @@
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 			<version>4.3.0</version>
 		</dependency>
-		<!--Open Feign-->
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+			<version>2.2.10.RELEASE</version>
 		</dependency>
+		<!--Open Feign
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+		<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>-->
 
 		<!-- Spring security
 		<dependency>
@@ -96,6 +112,16 @@
             <artifactId>mariadb-java-client</artifactId>
             <version>3.3.4</version>
         </dependency>-->
+		<!--Adding Dependencies for Spring Cloud Gateway-->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway-server-webflux</artifactId>
+		</dependency>
+		<!--<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway-webflux</artifactId>
+			<version>2023.0.1</version>
+		</dependency>-->
 		<!--Eureka Client Dependency-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
@@ -109,7 +135,6 @@
 		</dependency>
 
 		<!-- JWT tokens-->
-
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
@@ -140,6 +165,8 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+
 	</dependencies>
 
 
